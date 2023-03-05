@@ -1,3 +1,5 @@
+import { ClipInput } from "@/components/ClipInput";
+import { Hero } from "@/components/Hero";
 import { SemanticHead } from "@/components/SemanticHead";
 
 export default function Home() {
@@ -8,7 +10,9 @@ export default function Home() {
         title="Clippitt"
       />
       <main>
-        <h1>Clippitt</h1>
+        <Hero />
+
+        <ClipInput />
       </main>
     </>
   );
