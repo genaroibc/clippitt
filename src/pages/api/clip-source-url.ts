@@ -100,6 +100,12 @@ const handler: NextApiHandler<APIResponse<TwitchAPIAccessToken>> = async (
         ".mp4"
       );
 
+    if (!clipSourceURL) {
+      return res
+        .status(404)
+        .json({ ok: false, error: API_ERRORS.NO_CLIP_FOUND });
+    }
+
     return res.status(200).json(clipSourceURL);
   } catch (error) {
     if (error instanceof AxiosError) {

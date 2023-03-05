@@ -1,5 +1,4 @@
 import { getTwitchClipID } from "@/utils/get-twitch-clip-id";
-import { UPLOAD_CLIP_ERR } from "@/constants/error-messages";
 import { ClipID, ClipSourceURL, ClipURL } from "@/types";
 import { useState } from "react";
 import { getClipSourceURL } from "@/services/get-clip-source-url";
@@ -18,7 +17,7 @@ export function ClipInput() {
     const clipID = getTwitchClipID({ clipURL });
 
     if (!clipID) {
-      return setError(UPLOAD_CLIP_ERR.MALFORMED_CLIP_URL);
+      return setError("Invalid Twitch clip URL");
     }
 
     const clipSourceResponse = await getClipSourceURL({
@@ -29,6 +28,7 @@ export function ClipInput() {
       return setError(clipSourceResponse.error);
     }
 
+    setError(null);
     setClipID(clipID);
     setClipSourceURL(clipSourceResponse.data);
   };
@@ -59,24 +59,29 @@ export function ClipInput() {
           />
           <button className="min-w-fit px-4 py-2 ">Clip it!</button>
         </div>
-        <p className="text-red-400">{error}</p>
       </form>
 
-      {clipID && (
-        <p className="font-bold text-xl">
-          <span>ClipID:</span>
-          <span className="text-green-400">{clipID}</span>
-        </p>
-      )}
+      {error ? (
+        <p className="text-red-400">{error}</p>
+      ) : (
+        <>
+          {clipID && (
+            <p className="font-bold text-xl">
+              <span>ClipID:</span>
+              <span className="text-green-400">{clipID}</span>
+            </p>
+          )}
 
-      {clipSourceURL && (
-        <video
-          autoPlay
-          controls
-          muted={false}
-          className="max-w-xl mx-auto block m-12"
-          src={clipSourceURL}
-        ></video>
+          {clipSourceURL && (
+            <video
+              autoPlay
+              controls
+              muted={false}
+              className="max-w-xl mx-auto block m-12"
+              src={clipSourceURL}
+            ></video>
+          )}
+        </>
       )}
     </div>
   );
