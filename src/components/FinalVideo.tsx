@@ -1,7 +1,7 @@
 import { VideoConfig } from "@/types";
 import { CloudinaryVideo, Transformation } from "@cloudinary/url-gen";
 import { source } from "@cloudinary/url-gen/actions/overlay";
-import { crop } from "@cloudinary/url-gen/actions/resize";
+import { crop, fill } from "@cloudinary/url-gen/actions/resize";
 import { Position } from "@cloudinary/url-gen/qualifiers";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
 import { video } from "@cloudinary/url-gen/qualifiers/source";
@@ -19,37 +19,50 @@ const getTransformedVideoURL = ({
   videoConfig: VideoConfig;
   cldVideoPublicID: string;
 }) => {
+  console.log({ videoConfig });
   const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
     cloudName: "shape-snap",
   })
     .resize(
-      crop()
+      fill()
         .width(videoConfig.content.size.width)
         .height(videoConfig.content.size.height * 2)
     )
     .overlay(
       source(
         video(cldVideoPublicID).transformation(
-          new Transformation().resize(
-            crop()
-              .width(videoConfig.content.size.width)
-              .height(videoConfig.content.size.height)
-              .x(videoConfig.content.coords.x)
-              .y(videoConfig.content.coords.y)
-          )
+          new Transformation()
+            .resize(
+              crop()
+                .width(videoConfig.content.size.width)
+                .height(videoConfig.content.size.height)
+                .x(videoConfig.content.coords.x)
+                .y(videoConfig.content.coords.y)
+            )
+            .resize(
+              fill()
+                .width(videoConfig.content.size.width)
+                .height(videoConfig.content.size.height)
+            )
         )
       ).position(new Position().gravity(compass("south")))
     )
     .overlay(
       source(
         video(cldVideoPublicID).transformation(
-          new Transformation().resize(
-            crop()
-              .width(videoConfig.camera.size.width)
-              .height(videoConfig.camera.size.height)
-              .x(videoConfig.camera.coords.x)
-              .y(videoConfig.camera.coords.y)
-          )
+          new Transformation()
+            .resize(
+              crop()
+                .width(videoConfig.camera.size.width)
+                .height(videoConfig.camera.size.height)
+                .x(videoConfig.camera.coords.x)
+                .y(videoConfig.camera.coords.y)
+            )
+            .resize(
+              fill()
+                .width(videoConfig.content.size.width)
+                .height(videoConfig.content.size.height)
+            )
         )
       ).position(new Position().gravity(compass("north")))
     )
@@ -72,7 +85,7 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
   }, [videoPublicID, videoConfig]);
   return (
     <section id="final-video-section">
-      <h3 className="font-bold text-center text-4xl my-12">Final Video</h3>
+      <h3 className="font-bold text-center text-2xl my-12">Final Video</h3>
 
       {transformedVideoURL && (
         <div className="flex flex-col justify-center gap-4 items-center">

@@ -175,9 +175,11 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
               className="bg-blue-500 text-white rounded py-2 px-4"
               onClick={() => {
                 handleGoToNextStep();
-                document
-                  .getElementById("final-video-section")
-                  ?.scrollIntoView({ behavior: "smooth" });
+                setTimeout(() => {
+                  document
+                    .getElementById("final-video-section")
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }, 150);
               }}
             />
           ) : (
