@@ -38,6 +38,30 @@ a:hover {
   text-decoration: underline;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #eee;
+  font-size: inherit;
+  -webkit-box-shadow: 0 0 0px 1000px #111 inset;
+}
+
+button {
+  padding: 0.8rem 1.5rem;
+  background: #09f;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  filter: brightness(80%);
+}
+
 @media screen and (max-width: 768px) {
   :root {
     font-size: 14px;
