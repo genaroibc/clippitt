@@ -57,7 +57,7 @@ export function ClipInput({ onClipURL }: Props) {
         <label htmlFor="clipUrl" className="text-xl font-bold mb-2">
           Your Twitch clip URL
         </label>
-        <div className="flex gap-4 justify-start items-center">
+        <div className="flex justify-start items-center">
           <input
             required
             minLength={10}
@@ -71,8 +71,9 @@ export function ClipInput({ onClipURL }: Props) {
           />
           <button
             disabled={loading}
-            className="min-w-fit flex gap-2 items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 transition-colors"
+            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-500 hover:to-blue-600 text-white font-bold rounded-br-full rounded-tr-full duration-300 ease-in-out rotate-gradient hover:no-underline hover:shadow-2xl min-w-fit flex gap-2 items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 hover:scale-110 transition-transform relative z-10 overflow-hidden group"
           >
+            <span className="absolute -rotate-45 scale-150 -z-10 -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-500 top-0 left-0 right-0 h-2/4 bg-gradient-to-t from-white to-transparent opacity-50"></span>
             {loading ? (
               <svg
                 className="w-8"
