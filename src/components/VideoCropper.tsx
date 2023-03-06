@@ -106,7 +106,9 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
       }
 
       const nextStep = currentStep + 1;
-      if (nextStep > TOTAL_STEPS) return currentStep;
+      if (nextStep > TOTAL_STEPS + 1) {
+        return currentStep;
+      }
       return nextStep;
     });
   };
@@ -139,8 +141,12 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
       </div>
 
       <div className="flex flex-col justify-center gap-8 p-8 mx-auto xl:w-full">
-        <h4 className="text-3xl font-bold">{STEPS[step]?.title}</h4>
-        <p className="text-xl">{STEPS[step]?.subtitle}</p>
+        <h4 className="text-3xl font-bold">
+          {STEPS[step < TOTAL_STEPS ? step : TOTAL_STEPS]?.title}
+        </h4>
+        <p className="text-xl">
+          {STEPS[step < TOTAL_STEPS ? step : TOTAL_STEPS]?.subtitle}
+        </p>
         <nav className="flex gap-4 items-center">
           <button
             disabled={step === 0}

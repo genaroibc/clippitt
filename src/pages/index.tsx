@@ -54,17 +54,17 @@ export default function Home() {
           />
         )}
 
-        {videoConfig && clipPublicID && (
-          <section className="bg-violet-900/50 flex flex-col gap-4 px-4 py-8">
+        <section className="bg-violet-900/50 flex flex-col gap-4">
+          {videoConfig && clipPublicID && (
             <FinalVideo
               videoConfig={videoConfig}
               videoPublicID={clipPublicID}
             />
-            {error && (
-              <p className="text-red-400 text-center text-2xl my-8">{error}</p>
-            )}
-          </section>
-        )}
+          )}
+          {error && (
+            <p className="text-red-400 text-center text-2xl my-8">{error}</p>
+          )}
+        </section>
       </main>
     </>
   );
