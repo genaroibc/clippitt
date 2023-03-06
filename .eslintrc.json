@@ -4,7 +4,6 @@
     "no-unused-vars": "error",
     "no-empty-function": "error",
     "no-use-before-define": "error",
-    "consistent-return": "error",
     "no-var": "error",
     "no-eval": "error",
     "no-implicit-coercion": "error"
