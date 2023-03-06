@@ -40,10 +40,12 @@ export default function Home() {
         description="Make shorts for TikTok and YouTube from a Twitch clip"
         title="Clippitt"
       />
-      <main>
-        <Hero />
+      <main className="py-12 flex flex-col">
+        <section className="max-w-4xl mx-auto my-12">
+          <Hero />
 
-        <ClipInput onClipURL={(newURL) => setClipURL(newURL)} />
+          <ClipInput onClipURL={(newURL) => setClipURL(newURL)} />
+        </section>
 
         {clipURL && (
           <VideoCropper
@@ -53,9 +55,16 @@ export default function Home() {
         )}
 
         {videoConfig && clipPublicID && (
-          <FinalVideo videoConfig={videoConfig} videoPublicID={clipPublicID} />
+          <section className="bg-violet-900/50 flex flex-col gap-4 px-4 py-8">
+            <FinalVideo
+              videoConfig={videoConfig}
+              videoPublicID={clipPublicID}
+            />
+            {error && (
+              <p className="text-red-400 text-center text-2xl my-8">{error}</p>
+            )}
+          </section>
         )}
-        {error && <p className="text-red-400 text-xl">{error}</p>}
       </main>
     </>
   );
