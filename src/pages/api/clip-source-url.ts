@@ -4,33 +4,39 @@ import { type NextApiHandler } from "next";
 import axios, { AxiosError } from "axios";
 
 const getEnvVariables = () => {
-  const TWITCH_ACCESS_TOKEN_API_URL = process.env.TWITCH_ACCESS_TOKEN_API_URL;
-  if (!TWITCH_ACCESS_TOKEN_API_URL) {
-    throw new Error(
-      "'TWITCH_ACCESS_TOKEN_API_URL' env variable is not defined"
-    );
-  }
+  // const TWITCH_ACCESS_TOKEN_API_URL = process.env.TWITCH_ACCESS_TOKEN_API_URL;
+  // if (!TWITCH_ACCESS_TOKEN_API_URL) {
+  //   throw new Error(
+  //     "'TWITCH_ACCESS_TOKEN_API_URL' env variable is not defined"
+  //   );
+  // }
 
   const TWITCH_APP_CLIENT_ID = process.env.TWITCH_APP_CLIENT_ID;
   if (!TWITCH_APP_CLIENT_ID) {
     throw new Error("'TWITCH_APP_CLIENT_ID' env variable is not defined");
   }
 
-  const TWITCH_APP_CLIENT_SECRET = process.env.TWITCH_APP_CLIENT_SECRET;
-  if (!TWITCH_APP_CLIENT_SECRET) {
-    throw new Error("'TWITCH_APP_CLIENT_SECRET' env variable is not defined");
-  }
+  // const TWITCH_APP_CLIENT_SECRET = process.env.TWITCH_APP_CLIENT_SECRET;
+  // if (!TWITCH_APP_CLIENT_SECRET) {
+  //   throw new Error("'TWITCH_APP_CLIENT_SECRET' env variable is not defined");
+  // }
 
   const TWITCH_CLIPS_API_URL = process.env.TWITCH_CLIPS_API_URL;
   if (!TWITCH_CLIPS_API_URL) {
     throw new Error("'TWITCH_CLIPS_API_URL' env variable is not defined");
   }
 
+  const TWITCH_API_ACCESS_TOKEN = process.env.TWITCH_API_ACCESS_TOKEN;
+  if (!TWITCH_API_ACCESS_TOKEN) {
+    throw new Error("'TWITCH_API_ACCESS_TOKEN' env variable is not defined");
+  }
+
   return {
-    TWITCH_ACCESS_TOKEN_API_URL,
+    // TWITCH_ACCESS_TOKEN_API_URL,
     TWITCH_APP_CLIENT_ID,
-    TWITCH_APP_CLIENT_SECRET,
+    // TWITCH_APP_CLIENT_SECRET,
     TWITCH_CLIPS_API_URL,
+    TWITCH_API_ACCESS_TOKEN,
   };
 };
 
@@ -54,33 +60,34 @@ const handler: NextApiHandler<APIResponse<TwitchAPIAccessToken>> = async (
   }
 
   const {
-    TWITCH_ACCESS_TOKEN_API_URL,
+    // TWITCH_ACCESS_TOKEN_API_URL,
     TWITCH_APP_CLIENT_ID,
-    TWITCH_APP_CLIENT_SECRET,
+    // TWITCH_APP_CLIENT_SECRET,
     TWITCH_CLIPS_API_URL,
+    TWITCH_API_ACCESS_TOKEN,
   } = getEnvVariables();
 
   try {
-    const accessTokenResponse = await axios.post(
-      TWITCH_ACCESS_TOKEN_API_URL,
-      null,
-      {
-        params: {
-          client_id: TWITCH_APP_CLIENT_ID,
-          client_secret: TWITCH_APP_CLIENT_SECRET,
-          grant_type: "client_credentials",
-        },
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    // const accessTokenResponse = await axios.post(
+    //   TWITCH_ACCESS_TOKEN_API_URL,
+    //   null,
+    //   {
+    //     params: {
+    //       client_id: TWITCH_APP_CLIENT_ID,
+    //       client_secret: TWITCH_APP_CLIENT_SECRET,
+    //       grant_type: "client_credentials",
+    //     },
+    //     headers: {
+    //       "Content-Type": "application/x-www-form-urlencoded",
+    //     },
+    //   }
+    // );
 
-    const accessToken = accessTokenResponse?.data?.access_token;
+    // const TWITCH_API_ACCESS_TOKEN = accessTokenResponse?.data?.access_token;
 
-    if (!accessToken) {
+    if (!TWITCH_API_ACCESS_TOKEN) {
       return res
-        .status(404)
+        .status(500)
         .json({ ok: false, error: API_ERRORS.NO_TOKEN_FOUND });
     }
 
@@ -90,7 +97,7 @@ const handler: NextApiHandler<APIResponse<TwitchAPIAccessToken>> = async (
       },
       headers: {
         "Client-ID": TWITCH_APP_CLIENT_ID,
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${TWITCH_API_ACCESS_TOKEN}`,
       },
     });
 
