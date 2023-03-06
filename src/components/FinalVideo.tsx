@@ -5,14 +5,23 @@ import { crop } from "@cloudinary/url-gen/actions/resize";
 import { Position } from "@cloudinary/url-gen/qualifiers";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
 import { video } from "@cloudinary/url-gen/qualifiers/source";
+import { useEffect, useState } from "react";
 
 type Props = {
-  videoSrc: string;
+  videoPublicID: string;
   videoConfig: VideoConfig;
 };
 
-export function FinalVideo({ videoSrc, videoConfig }: Props) {
-  const cldVideoURL = new CloudinaryVideo(videoSrc, { cloudName: "shape-snap" })
+const getTransformedVideoURL = ({
+  cldVideoPublicID,
+  videoConfig,
+}: {
+  videoConfig: VideoConfig;
+  cldVideoPublicID: string;
+}) => {
+  const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
+    cloudName: "shape-snap",
+  })
     .resize(
       crop()
         .width(videoConfig.content.size.width)
@@ -20,7 +29,7 @@ export function FinalVideo({ videoSrc, videoConfig }: Props) {
     )
     .overlay(
       source(
-        video(videoSrc).transformation(
+        video(cldVideoPublicID).transformation(
           new Transformation().resize(
             crop()
               .width(videoConfig.content.size.width)
@@ -33,7 +42,7 @@ export function FinalVideo({ videoSrc, videoConfig }: Props) {
     )
     .overlay(
       source(
-        video(videoSrc).transformation(
+        video(cldVideoPublicID).transformation(
           new Transformation().resize(
             crop()
               .width(videoConfig.camera.size.width)
@@ -46,13 +55,35 @@ export function FinalVideo({ videoSrc, videoConfig }: Props) {
     )
     .toURL();
 
+  return cldVideoURL;
+};
+
+export function FinalVideo({ videoPublicID, videoConfig }: Props) {
+  const [transformedVideoURL, seTransformedVideoURL] = useState<string | null>(
+    null
+  );
+  useEffect(() => {
+    const cldTransformedVideoURL = getTransformedVideoURL({
+      cldVideoPublicID: videoPublicID,
+      videoConfig,
+    });
+
+    seTransformedVideoURL(cldTransformedVideoURL);
+  }, [videoPublicID, videoConfig]);
   return (
     <>
       <h3 className="font-bold text-center text-4xl text-red-400  my-4">
         FinalVideo
       </h3>
 
-      <video autoPlay controls className="max-w-md" src={cldVideoURL}></video>
+      {transformedVideoURL && (
+        <video
+          autoPlay
+          controls
+          className="max-w-md"
+          src={transformedVideoURL}
+        ></video>
+      )}
     </>
   );
 }

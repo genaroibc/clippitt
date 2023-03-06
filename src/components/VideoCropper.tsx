@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
 import { VideoConfig } from "@/types";
 
@@ -34,9 +34,14 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
     content: { coords: { x: 0, y: 0 }, size: { width: 0, height: 0 } },
   });
 
+  useEffect(() => {
+    if (step === TOTAL_STEPS + 1) {
+      onVideoConfig(finalVideoConfig);
+    }
+  }, [step, onVideoConfig, finalVideoConfig]);
+
   const onCropComplete = useCallback(
     (croppedArea: Area, croppedAreaPixels: Area) => {
-      console.log({ crop, croppedArea, croppedAreaPixels });
       const { height, width, x, y } = croppedAreaPixels;
 
       const cameraConfig = {
@@ -68,14 +73,11 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
 
       setVideoConfig(updatedVideoConfig);
     },
-    [crop]
-    // [crop, onVideoCameraCoords] try this!
+    []
   );
 
   const handleGoToNextStep = () => {
     setStep((currentStep) => {
-      const nextStep = currentStep + 1;
-
       if (currentStep === 0) {
         setFinalVideoConfig((currentConfig) => ({
           ...currentConfig,
@@ -90,13 +92,12 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
             content: videoConfig.content,
           };
 
-          onVideoConfig(finalConfig);
-
           return finalConfig;
         });
       }
 
-      if (nextStep > TOTAL_STEPS) return currentStep;
+      const nextStep = currentStep + 1;
+      if (nextStep > TOTAL_STEPS + 1) return currentStep;
       return nextStep;
     });
   };
@@ -131,21 +132,40 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
       <div className="flex flex-col gap-8 p-4">
         <h4 className="text-3xl font-bold">{STEPS[step]?.title}</h4>
         <p className="text-xl">{STEPS[step]?.subtitle}</p>
-
         <nav className="flex gap-4 items-center">
           <button
+            disabled={step === 0}
             onClick={handleGoToPrevStep}
             className="bg-blue-400 text-white rounded py-2 px-4"
           >
             PREV
           </button>
           <button
+            disabled={step === TOTAL_STEPS + 1}
             onClick={handleGoToNextStep}
             className="bg-blue-400 text-white rounded py-2 px-4"
           >
-            NEXT
+            {step === TOTAL_STEPS ? "CREATE CLIP" : "NEXT"}
           </button>
         </nav>
+        <code className="bg-slate-900 p-4 flex flex-col gap-4">
+          <span>
+            Step <span className="text-green-600">{step}</span>
+          </span>
+          <span>
+            videoConfig{" "}
+            <span className="text-green-600">
+              {JSON.stringify(videoConfig)}
+            </span>
+          </span>
+          <span>
+            finalVideoConfig{" "}
+            <span className="text-green-600">
+              {JSON.stringify(finalVideoConfig)}
+            </span>
+          </span>
+        </code>
+        ;
       </div>
     </section>
   );
