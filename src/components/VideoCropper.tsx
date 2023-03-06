@@ -124,9 +124,14 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
   };
 
   return (
-    <section className="grid grid-cols-1 place-content-center xl:grid-cols-2 bg-violet-900 px-4 py-8">
-      <div className="relative w-[600px] h-[400px] flex gap-4 flex-grow mx-auto">
+    <section className="grid grid-cols-1 place-content-center xl:grid-cols-2 bg-violet-900 md:px-4 py-8">
+      <div className="relative w-full h-[300px] md:w-[600px] md:h-[400px] flex gap-4 flex-grow mx-auto ">
         <Cropper
+          style={{
+            containerStyle: {
+              maxWidth: "100vw",
+            },
+          }}
           video={videoSrc}
           crop={crop}
           zoom={zoom}
@@ -165,7 +170,7 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
               PREV
             </span>
           </button>
-          {step === TOTAL_STEPS ? (
+          {step >= TOTAL_STEPS ? (
             <CreateClipButton
               className="bg-blue-500 text-white rounded py-2 px-4"
               onClick={() => {

@@ -7,7 +7,7 @@ type Params = {
 export function getTwitchClipID({ clipURL }: Params): ClipID | null {
   if (!clipURL.includes("/")) return null;
 
-  const clipID = clipURL.split("/").at(-1);
+  const clipID = clipURL.split("/").at(-1)?.replaceAll(/\?.*/g, "").trim();
 
   return clipID ?? null;
 }

@@ -1,5 +1,6 @@
 import { ClipInput } from "@/components/ClipInput";
 import { FinalVideo } from "@/components/FinalVideo";
+import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { SemanticHead } from "@/components/SemanticHead";
 import { VideoCropper } from "@/components/VideoCropper";
@@ -66,6 +67,8 @@ export default function Home() {
           )}
         </section>
       </main>
+
+      <Footer />
     </>
   );
 }

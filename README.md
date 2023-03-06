@@ -2,7 +2,7 @@
 
 ## 📜 Description
 
-A tool to create shorts for TikTok and Youtube shorts uploading a Twitch clip URL.
+A tool to create shorts for TikTok, Reels and Youtube shorts uploading a Twitch clip URL.
 
 This project is part of the Cloud Create 2023 hackathon.
 

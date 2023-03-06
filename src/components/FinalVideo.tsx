@@ -72,14 +72,17 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
   }, [videoPublicID, videoConfig]);
   return (
     <section id="final-video-section">
-      <h3 className="font-bold text-center text-4xl my-4">Final Video</h3>
+      <h3 className="font-bold text-center text-4xl my-12">Final Video</h3>
 
       {transformedVideoURL && (
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col justify-center gap-4 items-center">
           <video
+            style={{
+              maxWidth: "min(100vw, 600px)",
+            }}
             autoPlay
             controls
-            className="max-w-xl mx-auto p-2 rounded-2xl bg-black shadow-2xl"
+            className="max-w-xl mx-auto md:p-2 sm:w-screen rounded-2xl bg-black shadow-2xl"
             src={transformedVideoURL}
           ></video>
 
