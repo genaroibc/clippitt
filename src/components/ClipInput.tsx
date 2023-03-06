@@ -31,25 +31,30 @@ export function ClipInput({ onClipURL }: Props) {
 
     const clipURL = clipURLResponse.data;
     onClipURL(clipURL);
+    setRawClipURL("");
     setError(null);
   };
 
   const handleRawClipURLInputChange = (e: any) => {
-    const newRawClipURL = e.target.value;
+    const newRawClipURL = e.target?.value?.trim();
+
+    setError(null);
     setRawClipURL(newRawClipURL);
   };
 
   return (
-    <div className="bg-gray-900 text-white p-4 rounded-md">
+    <div className="bg-gray-900 text-white p-8 rounded-md mx-auto">
       <form
         className="flex flex-col justify-center gap-4"
         onSubmit={handleSubmit}
       >
-        <label htmlFor="clipUrl" className="text-xl font-bold">
-          Enter your Twitch clip URL
+        <label htmlFor="clipUrl" className="text-xl font-bold mb-2">
+          Your Twitch clip URL
         </label>
         <div className="flex gap-4 justify-start items-center">
           <input
+            required
+            minLength={10}
             type="text"
             name="clipUrl"
             id="clipUrl"
@@ -58,7 +63,17 @@ export function ClipInput({ onClipURL }: Props) {
             className="bg-gray-800 text-white px-3 py-2 rounded-md w-full"
             placeholder="clips.twitch.tv"
           />
-          <button className="min-w-fit px-4 py-2 ">Clip it!</button>
+          <button className="min-w-fit flex gap-2 items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 transition-colors">
+            <span className="min-w-fit">Clip It</span>{" "}
+            <svg
+              className="w-4"
+              fill="#fff"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L284 427.7l-68.5 74.1c-8.9 9.7-22.9 12.9-35.2 8.1S160 493.2 160 480V396.4c0-4 1.5-7.8 4.2-10.7L331.8 202.8c5.8-6.3 5.6-16-.4-22s-15.7-6.4-22-.7L106 360.8 17.7 316.6C7.1 311.3 .3 300.7 0 288.9s5.9-22.8 16.1-28.7l448-256c10.7-6.1 23.9-5.5 34 1.4z" />
+            </svg>
+          </button>
         </div>
         {error && <p className="text-red-400">{error}</p>}
       </form>
