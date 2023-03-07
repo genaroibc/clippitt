@@ -42,6 +42,7 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
   useEffect(() => {
     if (step === TOTAL_STEPS + 1) {
       onVideoConfig(finalVideoConfig);
+      setStep(0);
     }
   }, [step, onVideoConfig, finalVideoConfig]);
 
@@ -111,6 +112,7 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
       }
       return nextStep;
     });
+    setZoom(1);
   };
 
   const handleGoToPrevStep = () => {
@@ -121,6 +123,7 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
 
       return prevStep;
     });
+    setZoom(1);
   };
 
   return (
