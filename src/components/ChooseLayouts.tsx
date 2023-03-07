@@ -3,8 +3,8 @@ import Image from "next/image";
 import { v4 as uuid } from "uuid";
 
 const LAYOUTS: { url: string; id: string; layout: Layout }[] = [
-  { url: "/one.png", id: uuid(), layout: "rounded" },
-  { url: "/two.png", id: uuid(), layout: "normal" },
+  { url: "/one.webp", id: uuid(), layout: "rounded" },
+  { url: "/two.webp", id: uuid(), layout: "normal" },
 ];
 
 type Props = {
