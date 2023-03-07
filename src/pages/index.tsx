@@ -28,9 +28,11 @@ export default function Home() {
 
     if (trimmedClipURL && trimmedClipURL !== lastClipURL.current?.trim()) {
       handleUploadVideo();
+      setVideoConfig(null);
       lastClipURL.current = trimmedClipURL;
     }
   }, [clipURL]);
+
   const handleOnVideoConfig = (config: VideoConfig) => {
     setVideoConfig(config);
   };
