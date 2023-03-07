@@ -1,15 +1,77 @@
-import { VideoConfig } from "@/types";
+import { Layout, VideoConfig } from "@/types";
 import { CloudinaryVideo, Transformation } from "@cloudinary/url-gen";
+import { blur } from "@cloudinary/url-gen/actions/effect";
 import { source } from "@cloudinary/url-gen/actions/overlay";
 import { crop, fill } from "@cloudinary/url-gen/actions/resize";
+import { max } from "@cloudinary/url-gen/actions/roundCorners";
 import { Position } from "@cloudinary/url-gen/qualifiers";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
 import { video } from "@cloudinary/url-gen/qualifiers/source";
 import { useEffect, useState } from "react";
+import { ChooseLayouts } from "./ChooseLayouts";
 
 type Props = {
   videoPublicID: string;
   videoConfig: VideoConfig;
+};
+
+const getCameraRoundedURL = ({
+  cldVideoPublicID,
+  videoConfig,
+}: {
+  videoConfig: VideoConfig;
+  cldVideoPublicID: string;
+}) => {
+  const videoWidth = videoConfig.camera.size.width;
+  const videoHeight = Math.floor(videoConfig.camera.size.width * 1.778); // aspect ratio 9:16
+
+  const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
+    cloudName: "shape-snap",
+  })
+    .effect(blur().strength(500))
+    .resize(fill().width(videoWidth).height(videoHeight))
+    .overlay(
+      source(
+        video(cldVideoPublicID).transformation(
+          new Transformation()
+            .resize(
+              crop()
+                .width(videoConfig.content.size.width)
+                .height(videoConfig.content.size.height)
+                .x(videoConfig.content.coords.x)
+                .y(videoConfig.content.coords.y)
+            )
+            .resize(
+              fill()
+                .width(videoWidth)
+                .height(Math.floor(videoHeight / 2))
+            )
+        )
+      ).position(new Position().gravity(compass("south")))
+    )
+    .overlay(
+      source(
+        video(cldVideoPublicID).transformation(
+          new Transformation()
+            .resize(
+              crop()
+                .width(videoConfig.camera.size.height)
+                .height(videoConfig.camera.size.height)
+                .x(videoConfig.camera.coords.x)
+                .y(videoConfig.camera.coords.y)
+            )
+            .resize(
+              fill()
+                .width(Math.floor(videoWidth * 0.9))
+                .height(Math.floor(videoHeight / 2))
+            )
+            .roundCorners(max())
+        )
+      ).position(new Position().gravity(compass("north")))
+    )
+    .toURL();
+
+  return cldVideoURL;
 };
 
 const getTransformedVideoURL = ({
@@ -70,23 +132,37 @@ const getTransformedVideoURL = ({
 };
 
 export function FinalVideo({ videoPublicID, videoConfig }: Props) {
-  const [transformedVideoURL, setTransformedVideoURL] = useState<string | null>(
-    null
-  );
+  const [transformedVideoURLs, setTransformedVideoURLs] = useState<{
+    rounded: string;
+    normal: string;
+  } | null>(null);
+
+  const [layout, setLayout] = useState<Layout>("normal");
+
   useEffect(() => {
     const cldTransformedVideoURL = getTransformedVideoURL({
       cldVideoPublicID: videoPublicID,
       videoConfig,
     });
 
-    setTransformedVideoURL(cldTransformedVideoURL);
+    const cldCameraRoundedURL = getCameraRoundedURL({
+      cldVideoPublicID: videoPublicID,
+      videoConfig,
+    });
+
+    setTransformedVideoURLs({
+      normal: cldTransformedVideoURL,
+      rounded: cldCameraRoundedURL,
+    });
   }, [videoPublicID, videoConfig]);
   return (
     <section id="final-video-section">
       <h3 className="font-bold text-center text-2xl my-12">Final Video</h3>
 
-      {transformedVideoURL && (
+      {transformedVideoURLs && (
         <div className="flex flex-col md:flex-row justify-center gap-4 items-center">
+          <ChooseLayouts onNewLayout={(layout) => setLayout(layout)} />
+
           <video
             style={{
               maxWidth: "min(100vw, 400px)",
@@ -95,7 +171,7 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
             autoPlay
             controls
             className="max-w-xl md:p-2 sm:w-screen rounded-2xl bg-black shadow-2xl"
-            src={transformedVideoURL}
+            src={transformedVideoURLs[layout]}
           ></video>
 
           <nav className="flex flex-col sm:flex-row md:flex-col gap-8 justify-between p-4">
@@ -103,7 +179,7 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
               target="_blank"
               className="text-center hover:no-underline relative z-10 overflow-hidden bg-blue-600 group hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transform hover:-translate-y-1 hover:scale-110 transition duration-300 ease-in-out flex justify-center gap-2 items-center"
               download
-              href={transformedVideoURL}
+              href={transformedVideoURLs[layout]}
             >
               <span className="absolute -rotate-45 scale-150 -z-10 -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-500 top-0 left-0 right-0 h-2/4 bg-gradient-to-t from-white to-transparent opacity-50"></span>
               Download
