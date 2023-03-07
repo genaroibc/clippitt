@@ -5,7 +5,7 @@ export function Hero() {
       <span className="leading-relaxed text-violet-700">Twitch</span> Clips to{" "}
       <span className="leading-relaxed ">TikToks</span>,{" "}
       <span className="leading-relaxed text-pink-600">Reels</span> and{" "}
-      <span className="leading-relaxed text-red-500">Youtube shorts</span>{" "}
+      <span className="leading-relaxed text-red-600">Youtube shorts</span>{" "}
     </h1>
   );
 }
