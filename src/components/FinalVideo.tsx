@@ -156,7 +156,7 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
     });
   }, [videoPublicID, videoConfig]);
   return (
-    <section id="final-video-section">
+    <section>
       <h3 className="font-bold text-center text-2xl my-12">Final Video</h3>
 
       {transformedVideoURLs && (

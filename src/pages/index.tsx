@@ -57,7 +57,10 @@ export default function Home() {
           />
         )}
 
-        <section className="bg-violet-900/50 flex flex-col gap-4">
+        <section
+          id="final-video-section"
+          className="bg-violet-900/50 flex flex-col gap-4"
+        >
           {videoConfig && clipPublicID && (
             <FinalVideo
               videoConfig={videoConfig}
