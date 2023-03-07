@@ -6,11 +6,11 @@ import { CreateClipButton } from "./CreateClipButton";
 const STEPS = [
   {
     title: "😀 Select the webcam area",
-    subtitle: "Zoom in/out to crop the desired area",
+    subtitle: "Zoom in/out and drag to crop the desired area",
   },
   {
     title: "💻 Select the main content area",
-    subtitle: "Zoom in/out to crop the desired area",
+    subtitle: "Zoom in/out and drag to crop the desired area",
   },
   {
     title: "You did it! 🥳",
