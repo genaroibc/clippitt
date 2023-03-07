@@ -39,8 +39,8 @@ const getTransformedVideoURL = ({
             )
             .resize(
               fill()
-                .width(videoConfig.content.size.width)
-                .height(videoConfig.content.size.height)
+                .width(videoWidth)
+                .height(Math.floor(videoHeight / 2))
             )
         )
       ).position(new Position().gravity(compass("south")))
@@ -58,8 +58,8 @@ const getTransformedVideoURL = ({
             )
             .resize(
               fill()
-                .width(videoConfig.content.size.width)
-                .height(videoConfig.content.size.height)
+                .width(videoWidth)
+                .height(Math.floor(videoHeight / 2))
             )
         )
       ).position(new Position().gravity(compass("north")))
