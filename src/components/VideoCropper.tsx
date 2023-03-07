@@ -42,7 +42,9 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
   useEffect(() => {
     if (step === TOTAL_STEPS + 1) {
       onVideoConfig(finalVideoConfig);
-      setStep(0);
+      setTimeout(() => {
+        setStep(0);
+      }, 500);
     }
   }, [step, onVideoConfig, finalVideoConfig]);
 
