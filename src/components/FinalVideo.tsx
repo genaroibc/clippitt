@@ -19,14 +19,13 @@ const getTransformedVideoURL = ({
   videoConfig: VideoConfig;
   cldVideoPublicID: string;
 }) => {
+  const videoWidth = videoConfig.camera.size.width;
+  const videoHeight = Math.floor(videoConfig.camera.size.width * 1.778); // aspect ratio 9:16
+
   const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
     cloudName: "shape-snap",
   })
-    .resize(
-      fill()
-        .width(videoConfig.content.size.width)
-        .height(videoConfig.content.size.height * 2)
-    )
+    .resize(fill().width(videoWidth).height(videoHeight))
     .overlay(
       source(
         video(cldVideoPublicID).transformation(
@@ -87,10 +86,11 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
       <h3 className="font-bold text-center text-2xl my-12">Final Video</h3>
 
       {transformedVideoURL && (
-        <div className="flex justify-center gap-4 items-center">
+        <div className="flex flex-col md:flex-row justify-center gap-4 items-center">
           <video
             style={{
               maxWidth: "min(100vw, 400px)",
+              aspectRatio: "9/16",
             }}
             autoPlay
             controls
@@ -98,7 +98,7 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
             src={transformedVideoURL}
           ></video>
 
-          <nav className="flex flex-col gap-8 justify-between p-4">
+          <nav className="flex flex-col sm:flex-row md:flex-col gap-8 justify-between p-4">
             <a
               target="_blank"
               className="text-center hover:no-underline relative z-10 overflow-hidden bg-blue-600 group hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-full shadow-lg transform hover:-translate-y-1 hover:scale-110 transition duration-300 ease-in-out flex justify-center gap-2 items-center"

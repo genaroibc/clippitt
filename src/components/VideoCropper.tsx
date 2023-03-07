@@ -137,8 +137,7 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
           zoom={zoom}
           showGrid
           restrictPosition={true}
-          aspect={1}
-          cropSize={{ height: 300, width: 300 }}
+          aspect={1 / 0.9}
           onCropChange={setCrop}
           onCropComplete={onCropComplete}
           onZoomChange={setZoom}
