@@ -1,3 +1,7 @@
+## 🥈 This project has won the second place in the CloudCreate hackathon 2023 🤩
+
+<br/>
+
 # 🎥 Clippitt
 
 ## 📜 Description
