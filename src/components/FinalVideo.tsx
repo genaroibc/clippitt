@@ -131,10 +131,118 @@ const getTransformedVideoURL = ({
   return cldVideoURL;
 };
 
+const getCameraTopVideoURL = ({
+  cldVideoPublicID,
+  videoConfig,
+}: {
+  videoConfig: VideoConfig;
+  cldVideoPublicID: string;
+}) => {
+  const videoWidth = videoConfig.camera.size.width;
+  const videoHeight = Math.floor(videoConfig.camera.size.width * 1.778); // aspect ratio 9:16
+
+  const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
+    cloudName: "shape-snap",
+  })
+    .resize(fill().width(videoWidth).height(videoHeight))
+    .overlay(
+      source(
+        video(cldVideoPublicID).transformation(
+          new Transformation()
+            .resize(
+              crop()
+                .width(videoConfig.content.size.width)
+                .height(videoConfig.content.size.height)
+                .x(videoConfig.content.coords.x)
+                .y(videoConfig.content.coords.y)
+            )
+            .resize(fill().width(videoWidth).height(Math.floor(videoHeight)))
+        )
+      ).position(new Position().gravity(compass("south")))
+    )
+    .overlay(
+      source(
+        video(cldVideoPublicID).transformation(
+          new Transformation()
+            .resize(
+              crop()
+                .width(videoConfig.camera.size.width)
+                .height(videoConfig.camera.size.height)
+                .x(videoConfig.camera.coords.x)
+                .y(videoConfig.camera.coords.y)
+            )
+            .resize(
+              fill()
+                .width(videoWidth / 2)
+                .height(Math.floor(videoHeight / 4))
+            )
+        )
+      ).position(new Position().gravity(compass("north")))
+    )
+    .toURL();
+
+  return cldVideoURL;
+};
+
+const getCameraBottomVideoURL = ({
+  cldVideoPublicID,
+  videoConfig,
+}: {
+  videoConfig: VideoConfig;
+  cldVideoPublicID: string;
+}) => {
+  const videoWidth = videoConfig.camera.size.width;
+  const videoHeight = Math.floor(videoConfig.camera.size.width * 1.778); // aspect ratio 9:16
+
+  const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
+    cloudName: "shape-snap",
+  })
+    .resize(fill().width(videoWidth).height(videoHeight))
+    .overlay(
+      source(
+        video(cldVideoPublicID).transformation(
+          new Transformation()
+            .resize(
+              crop()
+                .width(videoConfig.content.size.width)
+                .height(videoConfig.content.size.height)
+                .x(videoConfig.content.coords.x)
+                .y(videoConfig.content.coords.y)
+            )
+            .resize(fill().width(videoWidth).height(Math.floor(videoHeight)))
+        )
+      ).position(new Position().gravity(compass("south")))
+    )
+    .overlay(
+      source(
+        video(cldVideoPublicID).transformation(
+          new Transformation()
+            .resize(
+              crop()
+                .width(videoConfig.camera.size.width)
+                .height(videoConfig.camera.size.height)
+                .x(videoConfig.camera.coords.x)
+                .y(videoConfig.camera.coords.y)
+            )
+            .resize(
+              fill()
+                .width(videoWidth / 2)
+                .height(Math.floor(videoHeight / 4))
+            )
+        )
+      ).position(new Position().gravity(compass("south")))
+    )
+    .toURL();
+
+  return cldVideoURL;
+};
+
 export function FinalVideo({ videoPublicID, videoConfig }: Props) {
   const [transformedVideoURLs, setTransformedVideoURLs] = useState<{
     rounded: string;
     normal: string;
+    "camera-top": string;
+    "camera-bottom": string;
   } | null>(null);
 
   const [layout, setLayout] = useState<Layout>("normal");
@@ -150,9 +258,21 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
       videoConfig,
     });
 
+    const cldCameraTopURL = getCameraTopVideoURL({
+      cldVideoPublicID: videoPublicID,
+      videoConfig,
+    });
+
+    const cldCameraBottomURL = getCameraBottomVideoURL({
+      cldVideoPublicID: videoPublicID,
+      videoConfig,
+    });
+
     setTransformedVideoURLs({
       normal: cldTransformedVideoURL,
       rounded: cldCameraRoundedURL,
+      "camera-top": cldCameraTopURL,
+      "camera-bottom": cldCameraBottomURL,
     });
   }, [videoPublicID, videoConfig]);
   return (
@@ -161,19 +281,17 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
 
       {transformedVideoURLs && (
         <div className="flex flex-col md:flex-row justify-center gap-12">
-          <video
-            style={{
-              maxWidth: "min(100vw, 400px)",
-              aspectRatio: "9/16",
-            }}
-            autoPlay
-            controls
-            className="max-w-xl md:p-2 sm:w-screen rounded-2xl bg-black shadow-2xl"
-            src={transformedVideoURLs[layout]}
-          ></video>
-
           <div className="flex flex-col justify-center gap-12 bg-violet-900 shadow-2xl p-8 rounded">
-            <ChooseLayouts onNewLayout={(layout) => setLayout(layout)} />
+            <video
+              style={{
+                maxWidth: "min(100vw, 400px)",
+                aspectRatio: "9/16",
+              }}
+              autoPlay
+              controls
+              className="max-w-xl md:p-2 sm:w-screen rounded-2xl bg-black shadow-2xl"
+              src={transformedVideoURLs[layout]}
+            ></video>
 
             <nav className="flex flex-col sm:flex-row md:flex-col gap-8 justify-between p-4">
               <a
@@ -212,6 +330,8 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
               </a>
             </nav>
           </div>
+
+          <ChooseLayouts onNewLayout={(layout) => setLayout(layout)} />
         </div>
       )}
     </section>

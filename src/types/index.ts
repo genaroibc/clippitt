@@ -32,4 +32,4 @@ export type VideoConfig = {
   content: { coords: Coords; size: Size };
 };
 
-export type Layout = "normal" | "rounded";
+export type Layout = "normal" | "rounded" | "camera-top" | "camera-bottom";
