@@ -33,12 +33,13 @@ const handler: NextApiHandler = async (req, res) => {
       .json({ ok: false, error: "Method not allowed on this resource" });
   }
 
-  const { videoURL } = req.body;
+  const { videoURL, videoID } = req.body;
 
-  if (!videoURL) {
-    return res
-      .status(400)
-      .json({ ok: false, error: "Missing required parameter 'videoURL'" });
+  if (!videoURL || !videoID) {
+    return res.status(400).json({
+      ok: false,
+      error: "Missing required parameters 'videoURL' and 'videoID'",
+    });
   }
 
   const { CLOUD_NAME, API_KEY, API_SECRET } = getEnvVariables();
@@ -52,6 +53,9 @@ const handler: NextApiHandler = async (req, res) => {
 
     const response = await Cloudinary.uploader.upload(videoURL, {
       resource_type: "video",
+      // if exists, Cloudinary will return the URL to the existing video
+      // instead of uploading it again
+      public_id: videoID,
     });
 
     const uploadedVideoPublicID = response.public_id;
@@ -59,7 +63,7 @@ const handler: NextApiHandler = async (req, res) => {
     if (!uploadedVideoPublicID || typeof uploadedVideoPublicID !== "string") {
       return res.status(404).json({
         ok: false,
-        error: "Clip not found, please try again",
+        error: "There was an error uploading your video, please try again",
       });
     }
 
@@ -67,7 +71,8 @@ const handler: NextApiHandler = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       ok: false,
-      error: "There was an error uploading your video, please try again",
+      error:
+        "There was an error in the server uploading your video, please try again",
     });
   }
 };

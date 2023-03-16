@@ -12,10 +12,15 @@ export type KnownResponse<T> = KnownResult<T> | KnownError;
 
 export type VideoData = { src: string; title: string };
 export type VideoURL = string;
+export type VideoID = string;
 
 export type ClipURL = string;
 export type ClipID = string;
 export type ClipSourceURL = string;
+export type Clip = {
+  url: ClipURL;
+  id: ClipID;
+};
 
 export type Size = {
   width: number;

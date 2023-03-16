@@ -1,8 +1,9 @@
 import axios from "axios";
-import { KnownResponse, VideoURL } from "@/types/index";
+import { KnownResponse, VideoID, VideoURL } from "@/types/index";
 
 type Params = {
   videoURL: VideoURL;
+  videoID: VideoID;
   // eslint-disable-next-line no-unused-vars
   onProgress?: (progress: number) => void;
 };
@@ -22,6 +23,7 @@ const getEnvVariables = () => {
 
 export async function uploadVideo({
   videoURL,
+  videoID,
   onProgress,
 }: Params): Promise<KnownResponse<{ uploadedVideoPublicID: string }>> {
   const { API_URL } = getEnvVariables();
@@ -29,7 +31,7 @@ export async function uploadVideo({
   try {
     const response = await axios.post(
       API_URL,
-      { videoURL },
+      { videoURL, videoID },
       {
         onUploadProgress: (event) => {
           const progress = (event.loaded / (event.total ?? 0)) * 100;

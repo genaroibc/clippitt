@@ -1,4 +1,4 @@
-import { ClipID, ClipSourceURL, KnownResponse } from "@/types";
+import { Clip, ClipID, KnownResponse } from "@/types";
 import { isAPIError } from "@/utils/is-api-error";
 import axios, { isAxiosError } from "axios";
 
@@ -22,14 +22,16 @@ const getEnvVariables = () => {
 
 export async function getClipSourceURL({
   clipID,
-}: Params): Promise<KnownResponse<ClipSourceURL>> {
+}: Params): Promise<KnownResponse<Clip>> {
   const { CLIP_SOURCE_API_URL } = getEnvVariables();
   try {
     const response = await axios.get(CLIP_SOURCE_API_URL, {
       params: { clipID },
     });
 
-    return { ok: true, data: response.data };
+    const clipData = response.data?.data;
+
+    return { ok: true, data: clipData };
   } catch (error) {
     if (!isAxiosError(error)) {
       return { ok: false, error: "There was an error, please try again" };

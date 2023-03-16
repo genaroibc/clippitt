@@ -1,7 +1,8 @@
-import type { APIResponse, TwitchAPIAccessToken } from "@/types/api";
+import type { APIResponse } from "@/types/api";
 import { API_ERRORS } from "@/constants/error-messages";
 import { type NextApiHandler } from "next";
 import axios, { AxiosError } from "axios";
+import { Clip } from "@/types";
 
 const getEnvVariables = () => {
   // const TWITCH_ACCESS_TOKEN_API_URL = process.env.TWITCH_ACCESS_TOKEN_API_URL;
@@ -40,10 +41,7 @@ const getEnvVariables = () => {
   };
 };
 
-const handler: NextApiHandler<APIResponse<TwitchAPIAccessToken>> = async (
-  req,
-  res
-) => {
+const handler: NextApiHandler<APIResponse<Clip>> = async (req, res) => {
   if (req.method !== "GET") {
     return res
       .status(405)
@@ -91,7 +89,7 @@ const handler: NextApiHandler<APIResponse<TwitchAPIAccessToken>> = async (
         .json({ ok: false, error: API_ERRORS.NO_TOKEN_FOUND });
     }
 
-    const clipDataResponse = await axios.get(TWITCH_CLIPS_API_URL, {
+    const { data: clipData } = await axios.get(TWITCH_CLIPS_API_URL, {
       params: {
         id: clipID,
       },
@@ -101,19 +99,21 @@ const handler: NextApiHandler<APIResponse<TwitchAPIAccessToken>> = async (
       },
     });
 
-    const clipSourceURL =
-      clipDataResponse?.data?.data?.[0]?.thumbnail_url?.replace(
+    const clip: Clip = {
+      id: clipData.data?.[0]?.id,
+      url: clipData.data?.[0]?.thumbnail_url?.replace(
         "-preview-480x272.jpg",
         ".mp4"
-      );
+      ),
+    };
 
-    if (!clipSourceURL) {
+    if (!clip.url || !clip.id) {
       return res
         .status(404)
         .json({ ok: false, error: API_ERRORS.NO_CLIP_FOUND });
     }
 
-    return res.status(200).json(clipSourceURL);
+    return res.status(200).json({ ok: true, data: clip });
   } catch (error) {
     if (error instanceof AxiosError) {
       return res

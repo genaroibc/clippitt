@@ -1,15 +1,15 @@
 import { getTwitchClipID } from "@/utils/get-twitch-clip-id";
-import { ClipURL } from "@/types";
+import { Clip, ClipURL } from "@/types";
 import { useState } from "react";
 import { getClipSourceURL } from "@/services/get-clip-source-url";
 import { DEMO_CLIP_URLS } from "@/constants/demo-clips";
 
 type Props = {
   // eslint-disable-next-line no-unused-vars
-  onClipURL: (newURL: string) => void;
+  onClip: (clip: Clip) => void;
 };
 
-export function ClipInput({ onClipURL }: Props) {
+export function ClipInput({ onClip }: Props) {
   const [rawClipURL, setRawClipURL] = useState<ClipURL>("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -34,9 +34,9 @@ export function ClipInput({ onClipURL }: Props) {
       return setError(clipURLResponse.error);
     }
 
-    const clipURL = clipURLResponse.data;
+    const { id, url } = clipURLResponse.data;
     setLoading(false);
-    onClipURL(clipURL);
+    onClip({ url, id });
     setRawClipURL("");
     setError(null);
   };
