@@ -1,13 +1,6 @@
+import { LAYOUTS } from "@/constants/layouts";
 import { Layout } from "@/types";
 import Image from "next/image";
-import { v4 as uuid } from "uuid";
-
-const LAYOUTS: { url: string; id: string; layout: Layout }[] = [
-  { url: "/rounded.webp", id: uuid(), layout: "rounded" },
-  { url: "/normal.webp", id: uuid(), layout: "normal" },
-  { url: "/camera-top.webp", id: uuid(), layout: "camera-top" },
-  { url: "/camera-bottom.webp", id: uuid(), layout: "camera-bottom" },
-];
 
 type Props = {
   // eslint-disable-next-line no-unused-vars

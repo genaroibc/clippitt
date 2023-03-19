@@ -2,23 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import Cropper, { Area } from "react-easy-crop";
 import { VideoConfig } from "@/types";
 import { CreateClipButton } from "./CreateClipButton";
-
-const STEPS = [
-  {
-    title: "😀 Select the webcam area",
-    subtitle: "Zoom in/out and drag to crop the desired area",
-  },
-  {
-    title: "💻 Select the main content area",
-    subtitle: "Zoom in/out and drag to crop the desired area",
-  },
-  {
-    title: "You did it! 🥳",
-    subtitle: "Click below to see magic happen",
-  },
-];
-
-const TOTAL_STEPS = STEPS.length - 1;
+import { STEPS_LIST, TOTAL_STEPS } from "@/constants/steps";
 
 type Props = {
   videoSrc: string;
@@ -151,10 +135,10 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
 
       <div className="flex flex-col justify-center gap-8 p-8 mx-auto xl:w-full">
         <h4 className="text-3xl font-bold">
-          {STEPS[step < TOTAL_STEPS ? step : TOTAL_STEPS]?.title}
+          {STEPS_LIST[step < TOTAL_STEPS ? step : TOTAL_STEPS]?.title}
         </h4>
         <p className="text-xl">
-          {STEPS[step < TOTAL_STEPS ? step : TOTAL_STEPS]?.subtitle}
+          {STEPS_LIST[step < TOTAL_STEPS ? step : TOTAL_STEPS]?.subtitle}
         </p>
         <nav className="flex gap-4 items-center">
           <button
