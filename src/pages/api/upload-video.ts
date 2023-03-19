@@ -1,30 +1,6 @@
 import { NextApiHandler } from "next";
 import { v2 as Cloudinary } from "cloudinary";
-
-const getEnvVariables = () => {
-  const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  if (!CLOUD_NAME) {
-    throw new Error(
-      "'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME' env variable is not defined"
-    );
-  }
-
-  const API_KEY = process.env.CLOUDINARY_API_KEY;
-  if (!API_KEY) {
-    throw new Error("'CLOUDINARY_API_KEY' env variable is not defined");
-  }
-
-  const API_SECRET = process.env.CLOUDINARY_API_SECRET;
-  if (!API_SECRET) {
-    throw new Error("'CLOUDINARY_API_SECRET' env variable is not defined");
-  }
-
-  return {
-    CLOUD_NAME,
-    API_KEY,
-    API_SECRET,
-  };
-};
+import ENV from "@/constants/env-vars";
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method !== "POST") {
@@ -42,13 +18,11 @@ const handler: NextApiHandler = async (req, res) => {
     });
   }
 
-  const { CLOUD_NAME, API_KEY, API_SECRET } = getEnvVariables();
-
   try {
     Cloudinary.config({
-      api_key: API_KEY,
-      api_secret: API_SECRET,
-      cloud_name: CLOUD_NAME,
+      api_key: ENV.CLOUDINARY_API_KEY,
+      api_secret: ENV.CLOUDINARY_API_SECRET,
+      cloud_name: ENV.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
     });
 
     const response = await Cloudinary.uploader.upload(videoURL, {

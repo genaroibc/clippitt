@@ -1,5 +1,6 @@
 import axios from "axios";
 import { KnownResponse, VideoID, VideoURL } from "@/types/index";
+import ENV from "@/constants/env-vars";
 
 type Params = {
   videoURL: VideoURL;
@@ -8,29 +9,14 @@ type Params = {
   onProgress?: (progress: number) => void;
 };
 
-const getEnvVariables = () => {
-  const API_URL = process.env.NEXT_PUBLIC_UPLOAD_VIDEO_API_URL;
-  if (!API_URL) {
-    throw new Error(
-      "'NEXT_PUBLIC_UPLOAD_VIDEO_API_URL' env variable is not defined"
-    );
-  }
-
-  return {
-    API_URL,
-  };
-};
-
 export async function uploadVideo({
   videoURL,
   videoID,
   onProgress,
 }: Params): Promise<KnownResponse<{ uploadedVideoPublicID: string }>> {
-  const { API_URL } = getEnvVariables();
-
   try {
     const response = await axios.post(
-      API_URL,
+      ENV.NEXT_PUBLIC_UPLOAD_VIDEO_API_URL,
       { videoURL, videoID },
       {
         onUploadProgress: (event) => {

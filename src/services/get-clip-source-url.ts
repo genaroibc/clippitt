@@ -1,3 +1,4 @@
+import ENV from "@/constants/env-vars";
 import { Clip, ClipID, KnownResponse } from "@/types";
 import { isAPIError } from "@/utils/is-api-error";
 import axios, { isAxiosError } from "axios";
@@ -6,26 +7,11 @@ type Params = {
   clipID: ClipID;
 };
 
-const getEnvVariables = () => {
-  const CLIP_SOURCE_API_URL = process.env.NEXT_PUBLIC_CLIP_SOURCE_API_URL;
-
-  if (!CLIP_SOURCE_API_URL) {
-    throw new Error(
-      "'NEXT_PUBLIC_CLIP_SOURCE_API_URL' env variable is not defined"
-    );
-  }
-
-  return {
-    CLIP_SOURCE_API_URL,
-  };
-};
-
 export async function getClipSourceURL({
   clipID,
 }: Params): Promise<KnownResponse<Clip>> {
-  const { CLIP_SOURCE_API_URL } = getEnvVariables();
   try {
-    const response = await axios.get(CLIP_SOURCE_API_URL, {
+    const response = await axios.get(ENV.NEXT_PUBLIC_CLIP_SOURCE_API_URL, {
       params: { clipID },
     });
 
