@@ -8,6 +8,14 @@ import { Position } from "@cloudinary/url-gen/qualifiers";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
 import { video } from "@cloudinary/url-gen/qualifiers/source";
 
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+if (!CLOUD_NAME) {
+  throw new Error(
+    "'NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME' env variable is not defined"
+  );
+}
+
 export const getCameraRoundedURL = ({
   cldVideoPublicID,
   videoConfig,
@@ -19,7 +27,7 @@ export const getCameraRoundedURL = ({
   const videoHeight = Math.floor(videoConfig.camera.size.width * 1.778); // aspect ratio 9:16
 
   const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
-    cloudName: "shape-snap",
+    cloudName: CLOUD_NAME,
   })
     .effect(blur().strength(500))
     .resize(fill().width(videoWidth).height(videoHeight))
@@ -78,7 +86,7 @@ export const getTransformedVideoURL = ({
   const videoHeight = Math.floor(videoConfig.camera.size.width * 1.778); // aspect ratio 9:16
 
   const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
-    cloudName: "shape-snap",
+    cloudName: CLOUD_NAME,
   })
     .resize(fill().width(videoWidth).height(videoHeight))
     .overlay(
@@ -135,7 +143,7 @@ export const getCameraTopVideoURL = ({
   const videoHeight = Math.floor(videoConfig.camera.size.width * 1.778); // aspect ratio 9:16
 
   const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
-    cloudName: "shape-snap",
+    cloudName: CLOUD_NAME,
   })
     .resize(fill().width(videoWidth).height(videoHeight))
     .overlay(
@@ -188,7 +196,7 @@ export const getCameraBottomVideoURL = ({
   const videoHeight = Math.floor(videoConfig.camera.size.width * 1.778); // aspect ratio 9:16
 
   const cldVideoURL = new CloudinaryVideo(cldVideoPublicID, {
-    cloudName: "shape-snap",
+    cloudName: CLOUD_NAME,
   })
     .resize(fill().width(videoWidth).height(videoHeight))
     .overlay(
