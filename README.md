@@ -10,7 +10,7 @@ This project is part of the Cloud Create 2023 hackathon.
 
 ## 🔗 Try it
 
-You can try it [here](https://clippitt.vercel.app)
+You can try it [here](https://clippitt.app)
 
 ## 🚀 Stack
 
