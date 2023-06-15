@@ -74,7 +74,10 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
             <FinalVideoNavbar downloadURL={transformedVideoURLs[layout]} />
           </div>
 
-          <ChooseLayouts onNewLayout={(layout) => setLayout(layout)} />
+          <ChooseLayouts
+            currentLayout={layout}
+            onNewLayout={(layout) => setLayout(layout)}
+          />
         </div>
       )}
     </section>
