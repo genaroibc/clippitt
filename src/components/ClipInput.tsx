@@ -3,7 +3,8 @@ import { Clip, ClipURL } from "@/types";
 import { useState } from "react";
 import { getClipSourceURL } from "@/services/get-clip-source-url";
 import { DEMO_CLIP_URLS } from "@/constants/demo-clips";
-import { Loader } from "./shared/Loader";
+import { Loader } from "@/components/shared/Loader";
+import { RotatingGradientButton } from "@/components/shared/RotatingGradientButton";
 
 type Props = {
   // eslint-disable-next-line no-unused-vars
@@ -77,11 +78,11 @@ export function ClipInput({ onClip }: Props) {
             className="bg-gray-800 text-white px-3 py-2 rounded-md w-full"
             placeholder="clips.twitch.tv"
           />
-          <button
+
+          <RotatingGradientButton
+            className="rounded-br-full rounded-tr-full hover:scale-110 hover:shadow-2xl"
             disabled={loading}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-500 hover:to-blue-600 text-white font-bold rounded-br-full rounded-tr-full duration-300 ease-in-out rotate-gradient hover:no-underline hover:shadow-2xl min-w-fit flex gap-2 items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 hover:scale-110 transition-transform relative z-10 overflow-hidden group"
           >
-            <span className="absolute -rotate-45 scale-150 -z-10 -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-500 top-0 left-0 right-0 h-2/4 bg-gradient-to-t from-white to-transparent opacity-50"></span>
             {loading ? (
               <Loader />
             ) : (
@@ -97,7 +98,7 @@ export function ClipInput({ onClip }: Props) {
                 </svg>
               </>
             )}
-          </button>
+          </RotatingGradientButton>
         </div>
         {error && <p className="text-red-400">{error}</p>}
       </form>
