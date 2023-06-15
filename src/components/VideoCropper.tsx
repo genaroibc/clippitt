@@ -113,7 +113,7 @@ export function VideoCropper({ videoSrc, onVideoConfig }: Props) {
   };
 
   return (
-    <section className="grid grid-cols-1 place-content-center xl:grid-cols-2 bg-violet-900 md:px-4 py-8">
+    <section className="grid grid-cols-1 place-content-center xl:grid-cols-2 md:px-4 py-8 max-w-7xl mx-auto">
       <div className="relative w-full h-[300px] md:w-[600px] md:h-[400px] flex gap-4 flex-grow mx-auto ">
         <Cropper
           style={{

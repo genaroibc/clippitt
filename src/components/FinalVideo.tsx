@@ -54,12 +54,12 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
   }, [videoPublicID, videoConfig]);
 
   return (
-    <section className="py-12 px-4">
-      <h3 className="font-bold text-center text-3xl my-12">Final Video</h3>
+    <section className="py-12 px-4 max-w-7xl mx-auto">
+      <h3 className="font-bold text-center text-3xl mt-12 mb-6">Final Video</h3>
 
       {transformedVideoURLs && (
-        <div className="flex flex-col md:flex-row justify-center gap-12">
-          <div className="flex flex-col justify-center gap-12 bg-violet-900 shadow-2xl p-8 rounded">
+        <div className="flex flex-col md:flex-row justify-between p-4 w-full gap-12">
+          <div className="flex flex-col justify-center gap-12 shadow-2xl rounded">
             <video
               style={{
                 maxWidth: "min(100vw, 400px)",
@@ -73,6 +73,7 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
 
             <FinalVideoNavbar downloadURL={transformedVideoURLs[layout]} />
           </div>
+
           <ChooseLayouts onNewLayout={(layout) => setLayout(layout)} />
         </div>
       )}

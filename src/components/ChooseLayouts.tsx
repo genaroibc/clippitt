@@ -9,8 +9,6 @@ type Props = {
 export function ChooseLayouts({ onNewLayout }: Props) {
   return (
     <section>
-      <h4 className="text-2xl mb-8 font-bold text-center">Choose a layout</h4>
-
       <div className="grid grid-cols-2 gap-8">
         {LAYOUTS.map((layout) => (
           <button
@@ -19,7 +17,7 @@ export function ChooseLayouts({ onNewLayout }: Props) {
             onClick={() => onNewLayout(layout.layout)}
           >
             <img
-              className="max-w-full rounded object-contain h-full"
+              className="max-w-full rounded object-cover h-full"
               width={200}
               height={200}
               src={layout.url}

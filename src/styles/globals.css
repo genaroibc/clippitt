@@ -22,11 +22,6 @@ html {
   overflow-x: hidden;
 }
 
-body {
-  max-width: 1600px;
-  margin: 0 auto;
-}
-
 a {
   color: inherit;
   text-decoration: none;

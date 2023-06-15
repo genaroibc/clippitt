@@ -53,12 +53,14 @@ export default function Home() {
           <ClipInput onClip={(clip) => setClip(clip)} />
         </section>
 
-        {clip.id && clip.url && (
-          <VideoCropper
-            onVideoConfig={handleOnVideoConfig}
-            videoSrc={clip.url}
-          />
-        )}
+        <div className="bg-violet-900">
+          {clip.id && clip.url && (
+            <VideoCropper
+              onVideoConfig={handleOnVideoConfig}
+              videoSrc={clip.url}
+            />
+          )}
+        </div>
 
         <section
           id="final-video-section"
@@ -71,7 +73,9 @@ export default function Home() {
             />
           )}
           {error && (
-            <p className="text-red-400 text-center text-2xl my-8">{error}</p>
+            <p className="text-red-400 text-center text-2xl my-8 max-w-prose mx-auto">
+              {error}
+            </p>
           )}
         </section>
       </main>
