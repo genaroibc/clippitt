@@ -1,6 +1,6 @@
 import { getTwitchClipID } from "@/utils/get-twitch-clip-id";
 import { Clip, ClipURL } from "@/types";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { getClipSourceURL } from "@/services/get-clip-source-url";
 import { DEMO_CLIP_URLS } from "@/constants/demo-clips";
 import { Loader } from "@/components/shared/Loader";
@@ -15,6 +15,7 @@ export function ClipInput({ onClip }: Props) {
   const [rawClipURL, setRawClipURL] = useState<ClipURL>("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const clipURLId = useId();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,7 +57,7 @@ export function ClipInput({ onClip }: Props) {
         className="flex flex-col justify-center gap-4"
         onSubmit={handleSubmit}
       >
-        <label htmlFor="clipUrl" className="text-xl font-bold mb-2">
+        <label htmlFor={clipURLId} className="text-xl font-bold mb-2">
           Your Twitch clip URL
         </label>
         <div className="flex justify-start items-center">
@@ -71,8 +72,8 @@ export function ClipInput({ onClip }: Props) {
             required
             minLength={10}
             type="text"
-            name="clipUrl"
-            id="clipUrl"
+            name={clipURLId}
+            id={clipURLId}
             value={rawClipURL}
             onChange={handleRawClipURLInputChange}
             className="bg-gray-800 text-white px-3 py-2 rounded-md w-full"

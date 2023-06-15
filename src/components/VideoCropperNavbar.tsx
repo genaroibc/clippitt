@@ -1,5 +1,6 @@
 import { STEPS_LIST, TOTAL_STEPS } from "@/constants/steps";
 import { ConfettiButton } from "./shared/ConfettiButton";
+import { FINAL_VIDEO_SECTION_ID } from "@/constants";
 
 type Props = {
   step: number;
@@ -45,7 +46,7 @@ export function VideoCropperNavbar({
               handleGoToNextStep();
               setTimeout(() => {
                 document
-                  .getElementById("final-video-section")
+                  .getElementById(FINAL_VIDEO_SECTION_ID)
                   ?.scrollIntoView({ behavior: "smooth" });
               }, 150);
             }}

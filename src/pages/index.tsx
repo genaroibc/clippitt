@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { SemanticHead } from "@/components/SemanticHead";
 import { VideoCropper } from "@/components/VideoCropper";
+import { FINAL_VIDEO_SECTION_ID } from "@/constants";
 import { uploadVideo } from "@/services/upload-video";
 import { Clip, ClipURL, VideoConfig } from "@/types";
 import { useEffect, useRef, useState } from "react";
@@ -63,7 +64,7 @@ export default function Home() {
         </div>
 
         <section
-          id="final-video-section"
+          id={FINAL_VIDEO_SECTION_ID}
           className="bg-violet-900/50 flex flex-col gap-4"
         >
           {videoConfig && clipPublicID && (
