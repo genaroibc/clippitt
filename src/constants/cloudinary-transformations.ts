@@ -11,20 +11,10 @@ import ENV from "./env-vars";
 
 export const CLIPPITT_LOGO_PUBLIC_ID = "dnbwyyllrb3ur9gvexjq";
 
-const getWatermarkOverlay = ({
-  videoHeight,
-  videoWidth,
-}: {
-  videoWidth: number;
-  videoHeight: number;
-}) =>
+const getWatermarkOverlay = () =>
   source(
     image(CLIPPITT_LOGO_PUBLIC_ID).transformation(
-      new Transformation().resize(
-        fill()
-          .width(Math.floor(videoWidth * 0.2))
-          .height(Math.floor(videoHeight / 8))
-      )
+      new Transformation().resize(fill().width(100).height(100))
     )
   ).position(new Position().gravity(compass("south")));
 
@@ -82,7 +72,7 @@ export const getCameraRoundedURL = ({
         )
       ).position(new Position().gravity(compass("north")))
     )
-    .overlay(getWatermarkOverlay({ videoHeight, videoWidth }))
+    .overlay(getWatermarkOverlay())
     .toURL();
 
   return cldVideoURL;
@@ -140,7 +130,7 @@ export const getTransformedVideoURL = ({
         )
       ).position(new Position().gravity(compass("north")))
     )
-    .overlay(getWatermarkOverlay({ videoHeight, videoWidth }))
+    .overlay(getWatermarkOverlay())
     .toURL();
 
   return cldVideoURL;
@@ -194,7 +184,7 @@ export const getCameraTopVideoURL = ({
         )
       ).position(new Position().gravity(compass("north")))
     )
-    .overlay(getWatermarkOverlay({ videoHeight, videoWidth }))
+    .overlay(getWatermarkOverlay())
     .toURL();
 
   return cldVideoURL;
@@ -248,7 +238,7 @@ export const getCameraBottomVideoURL = ({
         )
       ).position(new Position().gravity(compass("south")))
     )
-    .overlay(getWatermarkOverlay({ videoHeight, videoWidth }))
+    .overlay(getWatermarkOverlay())
     .toURL();
 
   return cldVideoURL;
