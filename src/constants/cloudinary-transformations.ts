@@ -6,8 +6,27 @@ import { crop, fill } from "@cloudinary/url-gen/actions/resize";
 import { max } from "@cloudinary/url-gen/actions/roundCorners";
 import { Position } from "@cloudinary/url-gen/qualifiers";
 import { compass } from "@cloudinary/url-gen/qualifiers/gravity";
-import { video } from "@cloudinary/url-gen/qualifiers/source";
+import { image, video } from "@cloudinary/url-gen/qualifiers/source";
 import ENV from "./env-vars";
+
+export const CLIPPITT_LOGO_PUBLIC_ID = "dnbwyyllrb3ur9gvexjq";
+
+const getWatermarkOverlay = ({
+  videoHeight,
+  videoWidth,
+}: {
+  videoWidth: number;
+  videoHeight: number;
+}) =>
+  source(
+    image(CLIPPITT_LOGO_PUBLIC_ID).transformation(
+      new Transformation().resize(
+        fill()
+          .width(Math.floor(videoWidth * 0.2))
+          .height(Math.floor(videoHeight / 8))
+      )
+    )
+  ).position(new Position().gravity(compass("south")));
 
 export const getCameraRoundedURL = ({
   cldVideoPublicID,
@@ -63,6 +82,7 @@ export const getCameraRoundedURL = ({
         )
       ).position(new Position().gravity(compass("north")))
     )
+    .overlay(getWatermarkOverlay({ videoHeight, videoWidth }))
     .toURL();
 
   return cldVideoURL;
@@ -120,6 +140,7 @@ export const getTransformedVideoURL = ({
         )
       ).position(new Position().gravity(compass("north")))
     )
+    .overlay(getWatermarkOverlay({ videoHeight, videoWidth }))
     .toURL();
 
   return cldVideoURL;
@@ -173,6 +194,7 @@ export const getCameraTopVideoURL = ({
         )
       ).position(new Position().gravity(compass("north")))
     )
+    .overlay(getWatermarkOverlay({ videoHeight, videoWidth }))
     .toURL();
 
   return cldVideoURL;
@@ -226,6 +248,7 @@ export const getCameraBottomVideoURL = ({
         )
       ).position(new Position().gravity(compass("south")))
     )
+    .overlay(getWatermarkOverlay({ videoHeight, videoWidth }))
     .toURL();
 
   return cldVideoURL;
