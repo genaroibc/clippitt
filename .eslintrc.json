@@ -6,6 +6,7 @@
     "no-use-before-define": "error",
     "no-var": "error",
     "no-eval": "error",
-    "no-implicit-coercion": "error"
+    "no-implicit-coercion": "error",
+    "@next/next/no-img-element": "off"
   }
 }

@@ -1,6 +1,5 @@
 import { LAYOUTS } from "@/constants/layouts";
 import { Layout } from "@/types";
-import Image from "next/image";
 
 type Props = {
   // eslint-disable-next-line no-unused-vars
@@ -19,7 +18,7 @@ export function ChooseLayouts({ onNewLayout }: Props) {
             key={layout.id}
             onClick={() => onNewLayout(layout.layout)}
           >
-            <Image
+            <img
               className="max-w-full rounded object-contain h-full"
               width={200}
               height={200}
