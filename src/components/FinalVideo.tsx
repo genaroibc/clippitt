@@ -58,26 +58,28 @@ export function FinalVideo({ videoPublicID, videoConfig }: Props) {
       <h3 className="font-bold text-center text-3xl mt-12 mb-6">Final Video</h3>
 
       {transformedVideoURLs && (
-        <div className="flex flex-col md:flex-row justify-between p-4 w-full gap-12">
-          <div className="flex flex-col justify-center gap-12 shadow-2xl rounded">
-            <video
-              style={{
-                maxWidth: "min(100vw, 400px)",
-                aspectRatio: "9/16",
-              }}
-              autoPlay
-              controls
-              className="max-w-xl md:p-2 sm:w-screen rounded-2xl bg-black shadow-2xl"
-              src={transformedVideoURLs[layout]}
-            ></video>
+        <div className="">
+          <div className="flex flex-col md:flex-row justify-between w-full gap-12 mb-8">
+            <div className="flex flex-col justify-center gap-12 shadow-2xl rounded">
+              <video
+                style={{
+                  maxWidth: "min(100vw, 400px)",
+                  aspectRatio: "9/16",
+                }}
+                autoPlay
+                controls
+                className="max-w-xl md:p-2 sm:w-screen rounded-2xl bg-black shadow-2xl"
+                src={transformedVideoURLs[layout]}
+              ></video>
+            </div>
 
-            <FinalVideoNavbar downloadURL={transformedVideoURLs[layout]} />
+            <ChooseLayouts
+              currentLayout={layout}
+              onNewLayout={(layout) => setLayout(layout)}
+            />
           </div>
 
-          <ChooseLayouts
-            currentLayout={layout}
-            onNewLayout={(layout) => setLayout(layout)}
-          />
+          <FinalVideoNavbar downloadURL={transformedVideoURLs[layout]} />
         </div>
       )}
     </section>
