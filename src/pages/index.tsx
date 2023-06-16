@@ -44,8 +44,8 @@ export default function Home() {
   return (
     <>
       <SemanticHead
-        description="Make shorts for TikTok and YouTube from a Twitch clip"
-        title="Clippitt"
+        description="Create vertical videos from your Twitch clips and share them on Youtube Shorts, TikTok and Instagram Reels"
+        title="Clippitt - Share your Twitch clips in TikTok, Youtube Shorts and Instagram Reels"
       />
       <main className="py-12 flex flex-col">
         <section className="max-w-4xl mx-auto my-12">
