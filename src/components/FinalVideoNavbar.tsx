@@ -34,7 +34,7 @@ export function FinalVideoNavbar({ downloadURL }: Props) {
         target="_blank"
         className="text-center hover:no-underline relative z-10 overflow-hidden bg-[rgb(29,155,240)] group hover:brightness-105 text-white font-bold py-4 px-6 rounded-full shadow-lg transform hover:-translate-y-1 hover:scale-110 transition duration-300 ease-in-out flex justify-center gap-2 items-center hover:shadow-2xl"
         download
-        href="https://twitter.com/intent/tweet?text=Check%20out%20the%20amazing%20video%20I%20created%20using%20Clippitt!%20%23clippitt"
+        href="https://twitter.com/intent/tweet?text=Check%20out%20the%20amazing%20video%20I%20created%20using%20Clippitt!%0A&url=https%3A%2F%2Fclippitt.app"
       >
         <span className="absolute -rotate-45 scale-150 -z-10 -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-500 top-0 left-0 right-0 h-2/4 bg-gradient-to-t from-white to-transparent opacity-50"></span>
         Tweet
