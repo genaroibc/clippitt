@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@cloudinary/url-gen':
     specifier: ^1.9.1
@@ -13,6 +17,9 @@ dependencies:
   '@types/react-dom':
     specifier: 18.0.11
     version: 18.0.11
+  '@vercel/kv':
+    specifier: 0.2.2
+    version: 0.2.2
   autoprefixer:
     specifier: 10.4.13
     version: 10.4.13(postcss@8.4.21)
@@ -398,6 +405,23 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.54.0
       eslint-visitor-keys: 3.3.0
+    dev: false
+
+  /@upstash/redis@1.21.0:
+    resolution: {integrity: sha512-c6M+cl0LOgGK/7Gp6ooMkIZ1IDAJs8zFR+REPkoSkAq38o7CWFX5FYwYEqGZ6wJpUGBuEOr/7hTmippXGgL25A==}
+    dependencies:
+      isomorphic-fetch: 3.0.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
+  /@vercel/kv@0.2.2:
+    resolution: {integrity: sha512-mqnQOB6bkp4h5eObxfLNIlhlVqOGSH8cWOlC5pDVWTjX3zL8dETO1ZBl6M74HBmeBjbD5+J7wDJklRigY6UNKw==}
+    engines: {node: '>=14.6'}
+    dependencies:
+      '@upstash/redis': 1.21.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /acorn-jsx@5.3.2(acorn@8.8.2):
@@ -1900,6 +1924,15 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: false
 
+  /isomorphic-fetch@3.0.0:
+    resolution: {integrity: sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==}
+    dependencies:
+      node-fetch: 2.7.0
+      whatwg-fetch: 3.6.18
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /js-sdsl@4.3.0:
     resolution: {integrity: sha512-mifzlm2+5nZ+lEcLJMoBK0/IH/bDg8XnJfd/Wq6IP+xoCjLZsTOnV2QpxlVbX9bMnkl5PdEjNtBJ9Cj1NjifhQ==}
     dev: false
@@ -2117,6 +2150,18 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+    dev: false
+
+  /node-fetch@2.7.0:
+    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
+    dependencies:
+      whatwg-url: 5.0.0
     dev: false
 
   /node-releases@2.0.10:
@@ -2880,6 +2925,10 @@ packages:
     dev: false
     optional: true
 
+  /tr46@0.0.3:
+    resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+    dev: false
+
   /tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
     dependencies:
@@ -3001,6 +3050,21 @@ packages:
       acorn-walk: 8.2.0
     dev: false
     optional: true
+
+  /webidl-conversions@3.0.1:
+    resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+    dev: false
+
+  /whatwg-fetch@3.6.18:
+    resolution: {integrity: sha512-ltN7j66EneWn5TFDO4L9inYC1D+Czsxlrw2SalgjMmEMkLfA5SIZxEFdE6QtHFiiM6Q7WL32c7AkI3w6yxM84Q==}
+    dev: false
+
+  /whatwg-url@5.0.0:
+    resolution: {integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==}
+    dependencies:
+      tr46: 0.0.3
+      webidl-conversions: 3.0.1
+    dev: false
 
   /which-boxed-primitive@1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
