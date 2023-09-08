@@ -118,9 +118,6 @@ export function FinalVideoNavbar({ downloadURL }: Props) {
           ></path>
         </svg>
       </a>
-      <a href={videoURL} target="_blank" rel="noopener noreferrer">
-        Go to <code>/v</code>
-      </a>
     </nav>
   );
 }
