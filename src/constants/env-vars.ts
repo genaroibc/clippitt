@@ -12,6 +12,7 @@ const ENV = {
   TWITCH_APP_CLIENT_SECRET: process.env.TWITCH_APP_CLIENT_SECRET!,
   TWITCH_CLIPS_API_URL: process.env.TWITCH_CLIPS_API_URL!,
   TWITCH_API_ACCESS_TOKEN: process.env.TWITCH_API_ACCESS_TOKEN!,
+  NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL!,
 };
 
 const envEntries = Object.entries(ENV);

@@ -1,18 +1,27 @@
+import ENV from "@/constants/env-vars";
 import { type GetServerSideProps } from "next";
 
 export default function VideoIDPage() {
-  return null;
+  return (
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam unde
+      aliquam veritatis perspiciatis est explicabo itaque, impedit sint
+      cupiditate deserunt adipisci tenetur atque laudantium eum repellendus
+      dolore quidem dolor corrupti.
+    </p>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const { src } = query;
+  const { src: videoHash } = query;
 
-  const encodedVideoURL = (Array.isArray(src) ? src[0] : src) ?? "";
-  const decodedVideoURL = globalThis.decodeURIComponent(globalThis.atob(encodedVideoURL));
+  const { videoURL } = await fetch(
+    `${ENV.NEXT_PUBLIC_BASE_URL}/api/video-hash?hash=${videoHash}`
+  ).then((res) => res.json());
 
   return {
     redirect: {
-      destination: decodedVideoURL,
+      destination: videoURL,
       permanent: true,
     },
     props: {},
