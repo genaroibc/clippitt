@@ -9,6 +9,7 @@
   color: #eee;
 
   line-height: 2;
+  scrollbar-gutter: stable;
 }
 
 * {
