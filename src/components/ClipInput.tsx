@@ -52,7 +52,7 @@ export function ClipInput({ onClip }: Props) {
   };
 
   return (
-    <div className="bg-gray-900 text-white p-8 rounded-md mx-auto">
+    <div className="bg-gray-900 text-white p-8 rounded-md mx-auto [box-shadow:0_0_60rem_2rem_#548a] mb-20">
       <form
         className="flex flex-col justify-center gap-4"
         onSubmit={handleSubmit}
