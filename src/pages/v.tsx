@@ -15,6 +15,15 @@ export default function VideoIDPage() {
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const { src: videoHash } = query;
 
+  if (!videoHash) {
+    return {
+      redirect: {
+        destination: "/",
+      },
+      props: {},
+    };
+  }
+
   const { videoURL } = await fetch(
     `${ENV.NEXT_PUBLIC_BASE_URL}/api/video-hash?hash=${videoHash}`
   ).then((res) => res.json());
