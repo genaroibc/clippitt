@@ -5,4 +5,5 @@ export enum API_ERRORS {
   "NO_CLIP_FOUND" = "Clip not found",
   "SERVER_ERROR" = "There was an error on the server, please try again",
   "GENERIC_ERROR" = "There was an error, please try again",
+  "TWITCH_UNAUTHORIZED" = "Access denied, contact the site owner",
 }

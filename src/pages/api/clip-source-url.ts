@@ -4,6 +4,7 @@ import { type NextApiHandler } from "next";
 import axios, { AxiosError } from "axios";
 import { Clip } from "@/types";
 import ENV from "@/constants/env-vars";
+import { isTwitchUnauthorizedError } from "@/utils/is-api-error";
 
 const handler: NextApiHandler<APIResponse<Clip>> = async (req, res) => {
   if (req.method !== "GET") {
@@ -39,6 +40,11 @@ const handler: NextApiHandler<APIResponse<Clip>> = async (req, res) => {
 
     // const TWITCH_API_ACCESS_TOKEN = accessTokenResponse?.data?.access_token;
 
+    // ENV.TWITCH_API_ACCESS_TOKEN = TWITCH_API_ACCESS_TOKEN;
+    // console.log({
+    //   TWITCH_API_ACCESS_TOKEN,
+    // });
+
     if (!ENV.TWITCH_API_ACCESS_TOKEN) {
       return res
         .status(500)
@@ -71,6 +77,12 @@ const handler: NextApiHandler<APIResponse<Clip>> = async (req, res) => {
 
     return res.status(200).json({ ok: true, data: clip });
   } catch (error) {
+    if (isTwitchUnauthorizedError(error)) {
+      return res
+        .status(401)
+        .json({ ok: false, error: API_ERRORS.TWITCH_UNAUTHORIZED });
+    }
+
     if (error instanceof AxiosError) {
       return res
         .status(error.status ?? 500)
